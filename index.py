@@ -9,7 +9,7 @@ from movies_scraper import search_movies, get_movie
 
 
 TOKEN = "6486303828:AAGk-u4EAsa9rEP3E-Znd3_UWlklg_Tp6ec"
-URL = "https://filmbyte.vercel.app/"
+URL = "https://filmbyte.onrender.com"
 bot = Bot(TOKEN)
 
 
