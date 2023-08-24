@@ -22,22 +22,26 @@ def search_movies(query):
 
 def get_movie(query):
     movie_details = {}
-    movie_page_link = BeautifulSoup(requests.get(f"{url_list[query]}").text, "html.parser")
-    
-    if movie_page_link:
-        title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
-        movie_details["title"] = title
-        img = movie_page_link.find("div", {'class': 'mvic-thumb'})['data-bg']
-        movie_details["img"] = img
-        links = movie_page_link.find_all("a", {'rel': 'noopener', 'data-wpel-link': 'internal'})
-        
-        final_links = {}
-        for i in links:
-            url = f"https://urlshortx.com/api?api={api_key}&url={i['href']}"
-            response = requests.get(url)
-            link = response.json()
-            final_links[f"{i.text}"] = link['shortenedUrl']
-        
-        movie_details["links"] = final_links
+    if query in url_list:
+        movie_page_link = BeautifulSoup(requests.get(url_list[query]).text, "html.parser")
+
+        if movie_page_link:
+            title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
+            movie_details["title"] = title
+            img = movie_page_link.find("div", {'class': 'mvic-thumb'})['data-bg']
+            movie_details["img"] = img
+            links = movie_page_link.find_all("a", {'rel': 'noopener', 'data-wpel-link': 'internal'})
+            
+            final_links = {}
+            for i in links:
+                url = f"https://urlshortx.com/api?api={api_key}&url={i['href']}"
+                response = requests.get(url)
+                link = response.json()
+                final_links[f"{i.text}"] = link['shortenedUrl']
+            
+            movie_details["links"] = final_links
+            
+    return movie_details
+
         
     return movie_details
