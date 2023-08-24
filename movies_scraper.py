@@ -30,6 +30,7 @@ def get_movie(query):
             movie_details["title"] = title
 
             img_element = movie_page_link.find("div", {'class': 'mvic-thumb'})
+            print("img_element:", img_element)  # Debugging line
             if img_element and 'data-bg' in img_element.attrs:
                 img = img_element['data-bg']
                 movie_details["img"] = img
