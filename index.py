@@ -8,13 +8,13 @@ from telegram.ext import CommandHandler, MessageHandler, Filters, CallbackQueryH
 from movies_scraper import search_movies, get_movie
 
 
-TOKEN = "6486303828:AAGk-u4EAsa9rEP3E-Znd3_UWlklg_Tp6ec"
-URL = "https://filmbyte.onrender.com"
+TOKEN = os.getenv("TOKEN")
+URL = os.getenv("URL")
 bot = Bot(TOKEN)
 
 
 def welcome(update, context) -> None:
-    update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to FilmByte Movies.\n"
+    update.message.reply_text(f"Hello {update.message.from_user.first_name}, Welcome to AI Movies.\n"
                               f"🔥 Download Your Favourite Movies For 💯 Free And 🍿 Enjoy it.")
     update.message.reply_text("👇 Enter Movie Name 👇")
 
@@ -60,32 +60,26 @@ def setup():
     dispatcher.add_handler(CallbackQueryHandler(movie_result))
     return dispatcher
 
-def create_app():
-    app = Flask(__name__)
-    
-    
-    @app.route('/')
-    def index():
-        return 'Hello World!'
-    
-    
-    @app.route('/{}'.format(TOKEN), methods=['GET', 'POST'])
-    def respond():
-        update = Update.de_json(request.get_json(force=True), bot)
-        setup().process_update(update)
-        return 'ok'
-    
-    
-    @app.route('/setwebhook', methods=['GET', 'POST'])
-    def set_webhook():
-        s = bot.setWebhook('{URL}/{HOOK}'.format(URL=URL, HOOK=TOKEN))
-        if s:
-            return "webhook setup ok"
-        else:
-            return "webhook setup failed"
-    return app
 
-app = create_app()
+app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.run()
+
+@app.route('/')
+def index():
+    return 'Hello World!'
+
+
+@app.route('/{}'.format(TOKEN), methods=['GET', 'POST'])
+def respond():
+    update = Update.de_json(request.get_json(force=True), bot)
+    setup().process_update(update)
+    return 'ok'
+
+
+@app.route('/setwebhook', methods=['GET', 'POST'])
+def set_webhook():
+    s = bot.setWebhook('{URL}/{HOOK}'.format(URL=URL, HOOK=TOKEN))
+    if s:
+        return "webhook setup ok"
+    else:
+        return "webhook setup failed"
