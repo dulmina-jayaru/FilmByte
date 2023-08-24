@@ -28,8 +28,12 @@ def get_movie(query):
         if movie_page_link:
             title = movie_page_link.find("div", {'class': 'mvic-desc'}).h3.text
             movie_details["title"] = title
-            img = movie_page_link.find("div", {'class': 'mvic-thumb'})['data-bg']
-            movie_details["img"] = img
+
+            img_element = movie_page_link.find("div", {'class': 'mvic-thumb'})
+            if img_element and 'data-bg' in img_element.attrs:
+                img = img_element['data-bg']
+                movie_details["img"] = img
+
             links = movie_page_link.find_all("a", {'rel': 'noopener', 'data-wpel-link': 'internal'})
             
             final_links = {}
@@ -43,5 +47,6 @@ def get_movie(query):
             
     return movie_details
 
+
         
-    return movie_details
+
