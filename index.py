@@ -9,7 +9,7 @@ from movies_scraper import search_movies, get_movie
 
 
 TOKEN = "6486303828:AAEby5kXlSKQsk5Q9fIhxvH4lzHk3M1eP7U"
-URL = "https://movie-bot-vert.vercel.app"
+URL = "https://important-calf-boot.cyclic.cloud"
 bot = Bot(TOKEN)
 
 
