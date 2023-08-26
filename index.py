@@ -5,7 +5,7 @@ import telebot
 from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from movies_scraper import search_movies, get_movie
 
-TOKEN = "6486303828:AAGufErAT2_a6bVgtA0GIPI_87_ccQOKbwM"
+TOKEN = "6486303828:AAEby5kXlSKQsk5Q9fIhxvH4lzHk3M1eP7U"
 bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start'])
